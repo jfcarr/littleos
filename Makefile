@@ -12,8 +12,12 @@ iso: kernel.elf
 	cd iso
 	genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -A os -input-charset utf8 -quiet -boot-info-table -o os.iso iso
 
+bochs:
+	bochs -f bochsrc.txt -q
+
 clean:
 	-rm -rf iso
 	-rm -f kernel.elf
 	-rm -f loader.o
 	-rm -f os.iso
+	-rm -f bochslog.txt
