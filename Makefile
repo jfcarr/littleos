@@ -1,8 +1,25 @@
-kernel.elf: loader.o
-	ld -T link.ld -melf_i386 loader.o -o kernel.elf
+OBJECTS = loader.o
+CC = gcc
+CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
+LDFLAGS = -T link.ld -melf_i386
+AS = nasm
+ASFLAGS = -f elf
+
+default:
+	@echo 'Valid targets:'
+	@echo '  all		Build kernel and create ISO.'
+	@echo '  kernel.elf	Build kernel.'
+	@echo '  iso		Create ISO.'
+	@echo '  bochs		Launch Bochs with ISO.'
+	@echo '  clean		Remove all non-versioned objects.'
+
+all: iso
+
+kernel.elf: $(OBJECTS)
+	ld $(LDFLAGS) $(OBJECTS) -o kernel.elf
 
 loader.o: loader.s
-	nasm -f elf32 loader.s
+	$(AS) $(ASFLAGS) loader.s 
 
 iso: kernel.elf
 	mkdir -p iso/boot/grub
