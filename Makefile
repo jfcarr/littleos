@@ -2,6 +2,8 @@ OBJECTS = loader.o
 CC = gcc
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
 LDFLAGS = -T link.ld -melf_i386
+GENISO = genisoimage
+GENISOFLAGS = -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -A os -input-charset utf8 -quiet -boot-info-table 
 AS = nasm
 ASFLAGS = -f elf
 
@@ -27,7 +29,7 @@ iso: kernel.elf
 	cp kernel.elf iso/boot
 	cp menu.lst iso/boot/grub
 	cd iso
-	genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -A os -input-charset utf8 -quiet -boot-info-table -o os.iso iso
+	$(GENISO) $(GENISOFLAGS) -o os.iso iso
 
 bochs:
 	bochs -f bochsrc.txt -q
