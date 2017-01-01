@@ -1,6 +1,6 @@
-# Little Book of OS Development
+# Little Book About OS Development
 
-My effort working through the [Little Book of OS Development](http://littleosbook.github.io/) 
+My effort working through the [Little Book About OS Development](http://littleosbook.github.io/) 
 
 ## Development Setup
 
